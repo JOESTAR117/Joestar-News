@@ -1,5 +1,4 @@
 const userService = require("../services/user.service");
-const mongoose = require("mongoose")
 
 const create = async (req, res) => {
   const { name, username, email, password, avatar, background } = req.body;
@@ -38,18 +37,30 @@ const findAll = async (req, res) => {
 };
 
 const findById = async (req, res) => {
-  const id = req.params.id;
+  const user = req.user;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Invalid id" });
-  }
-
-  const user = await userService.findByIdService(id);
-
-  if (!user) {
-    return res.status(400).send({ message: "User not found" });
-  }
   res.status(200).send(user);
 };
 
-module.exports = { create, findAll,findById};
+const update = async (req, res) => {
+  const { name, username, email, password, avatar, background } = req.body;
+
+  if (!name && !username && !email && !password && !avatar && !background) {
+    res.status(400).send({ message: "Submit at least one fields for update" });
+  }
+  const { id, user } = req;
+
+  await userService.updateService(
+    id,
+    name,
+    username,
+    email,
+    password,
+    avatar,
+    background
+  );
+  
+  res.status(200).send({ message: "User updated successfully" });
+};
+
+module.exports = { create, findAll, findById, update };
