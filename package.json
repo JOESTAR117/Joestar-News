@@ -1,6 +1,7 @@
 {
   "name": "joestar-news",
   "version": "1.0.0",
+  "type": "module",
   "description": "API for SPA Joestar News",
   "main": "index.js",
   "scripts": {
