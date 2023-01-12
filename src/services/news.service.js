@@ -2,12 +2,12 @@ import News from "../models/News.js";
 
 const createService = (body) => News.create(body)
 
-const findAllServices = () => News.find()
+const findAllService = () => News.find()
 
 
 
 
-export default {
+export {
     createService,
-    findAllServices
+    findAllService
 }
