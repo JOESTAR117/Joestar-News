@@ -33,4 +33,6 @@ export const validUser = async (req, res, next) => {
   }
 };
 
-export default  { validId, validUser };
+
+
+export default  { validId, validUser};
