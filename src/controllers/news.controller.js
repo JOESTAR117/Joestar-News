@@ -7,6 +7,7 @@ import {
   searchByTitleService,
   byUserService,
   updateService,
+  eraseService,
 } from "../services/news.service.js";
 import { ObjectId } from "mongoose";
 
@@ -197,17 +198,37 @@ export const update = async (req, res) => {
     if (!title && !text && !banner) {
       res
         .status(400)
-        .send({ message: "Submit at least one field to update the post " });
+        .send({ message: "Submit at least one field to update the news " });
     }
     const news = await findByIdService(id);
 
     if (news.user._id != req.userId) {
-      return res.status(400).send({ message: "You dind 't update this post " });
+      return res.status(400).send({ message: "You dind 't update this news " });
     }
 
     await updateService(id, title, text, banner);
 
-    return res.send({ message: "Post successfuly update" });
+    return res.send({ message: "News successfuly update" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
+export const erase = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const news = await findByIdService(id);
+
+    if (news.user._id != req.userId) {
+      return res
+        .status(400)
+        .send({ message: "You dind 't deleted this post " });
+    }
+
+    await eraseService(id);
+
+    return res.send({ message: "News deleted successfuly" });
   } catch (err) {
     res.status(500).send(err.message);
   }
