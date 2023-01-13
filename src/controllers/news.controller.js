@@ -8,6 +8,8 @@ import {
   byUserService,
   updateService,
   eraseService,
+  likeNewService,
+  deleteLikeNewService,
 } from "../services/news.service.js";
 import { ObjectId } from "mongoose";
 
@@ -229,6 +231,25 @@ export const erase = async (req, res) => {
     await eraseService(id);
 
     return res.send({ message: "News deleted successfuly" });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
+export const likeNews = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    const newsLiked = await likeNewService(id, userId);
+    console.log(newsLiked);
+
+    if (!newsLiked) {
+      await deleteLikeNewService(id, userId);
+      return res.status(200).send({ message: "Like successfully removed" });
+    }
+
+    res.send({ message: "Like done successfully" });
   } catch (err) {
     res.status(500).send(err.message);
   }
