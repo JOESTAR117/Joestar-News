@@ -10,8 +10,8 @@
   },
   "server": [
     {
-      "url": "http://localhost:3000",
-      "description": "Local Server"
+      "url": "https://api-joestar-news.onrender.com",
+      "description": "Render Server"
     }
   ],
   "paths": {
