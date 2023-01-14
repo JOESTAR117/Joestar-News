@@ -5,8 +5,8 @@
   "description": "API for SPA Joestar News",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "node src/index",
+    "dev": "nodemon src/index"
   },
   "keywords": [],
   "author": "Jackson Rios",
